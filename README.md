@@ -24,7 +24,7 @@ This project aims to develop an "Unredactor," a machine learning model that pred
     - The training process uses a RandomForestClassifier to predict the unredacted names based on the extracted features. A TfidfVectorizer is employed to convert the textual context into numerical vectors, capturing the importance of terms in the context. The model is trained on the training dataset, with hyperparameters like n_estimators and max_depth optimized for performance. The model learns to associate the context with the corresponding names.
 
 #### Model Validation:
-   - The trained model is validated using the validation dataset. During this phase, predictions are compared against the actual unredacted names to evaluate model performance. Metrics such as precision, recall, F1-score, and support are calculated to assess the model's ability to accurately predict names. This step ensures the model's robustness and highlights areas for improvement.
+    - The trained model is validated using the validation dataset. During this phase, predictions are compared against the actual unredacted names to evaluate model performance. Metrics such as precision, recall, F1-score, and support are calculated to assess the model's ability to accurately predict names. This step ensures the model's robustness and highlights areas for improvement.
 
 ### Test Predictions:
     - For the test data, the model generates predictions by processing the context in the test.tsv file. The predictions are filtered to match the length of the redacted names, improving the relevance of results. The final output is saved in a submission.tsv file, containing id and name columns. Warnings are displayed for mismatched lengths, and results are reviewed to ensure alignment with the expected format.
