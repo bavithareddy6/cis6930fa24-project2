@@ -9,6 +9,8 @@ pandas = "*"
 scikit-learn = "*"
 spacy = "*"
 textblob = "*"
+torch = "*"
+transformers = "*"
 
 [dev-packages]
 

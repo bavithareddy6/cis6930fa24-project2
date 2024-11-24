@@ -1,0 +1,133 @@
+# cis6930fa24-project2
+
+Name : Bavitha Reddy Modugu
+
+# Project Description
+This project aims to develop an "Unredactor," a machine learning model that predicts redacted names in textual data based on contextual clues. By leveraging natural language processing techniques and machine learning algorithms, the model is trained to recognize patterns in the text surrounding the redaction markers (e.g., ███) and predict the most likely names. Using a dataset of redacted contexts and names, the project involves feature engineering, model training with TF-IDF vectorization, and validation to optimize performance. The final goal is to generate accurate predictions for a test dataset and produce a submission file, demonstrating the model's ability to unredact names effectively.
+
+
+### Project Implementation Steps
+
+#### Data Preprocessing:
+   - The raw data from unredactor.tsv is loaded and split into training and validation sets. During this step, malformed lines are handled to ensure the integrity of the dataset. Key attributes like context and name are extracted, and any inconsistencies or missing values are flagged. The dataset is structured into a tab-separated format to maintain uniformity and compatibility with processing scripts. The files are loaded into the program for processing.
+
+#### Feature Engineering:
+   This step focuses on transforming raw data into meaningful features that the machine learning model can use. The features include:
+    -Redaction Length: The number of characters in the redacted name.
+    -Context Length: The total length of the review text surrounding the redacted name.
+    -Word Count: The number of words in the context.
+    -Part-of-Speech (POS) Tags: Capturing grammatical structures in the context.
+    -Redaction Ratio: The ratio of redaction length to context length. 
+    These features help the model understand the structural and semantic patterns in the data, improving prediction accuracy.
+
+#### Model Training:
+    - The training process uses a RandomForestClassifier to predict the unredacted names based on the extracted features. A TfidfVectorizer is employed to convert the textual context into numerical vectors, capturing the importance of terms in the context. The model is trained on the training dataset, with hyperparameters like n_estimators and max_depth optimized for performance. The model learns to associate the context with the corresponding names.
+
+#### Model Validation:
+   - The trained model is validated using the validation dataset. During this phase, predictions are compared against the actual unredacted names to evaluate model performance. Metrics such as precision, recall, F1-score, and support are calculated to assess the model's ability to accurately predict names. This step ensures the model's robustness and highlights areas for improvement.
+
+### Test Predictions:
+    - For the test data, the model generates predictions by processing the context in the test.tsv file. The predictions are filtered to match the length of the redacted names, improving the relevance of results. The final output is saved in a submission.tsv file, containing id and name columns. Warnings are displayed for mismatched lengths, and results are reviewed to ensure alignment with the expected format.
+
+
+
+
+### Environment setup
+Run the follwing pipenv command to create the required environment
+
+```pipenv install```
+
+### How to run
+
+
+Run the follwing pipenv commands to execute the program
+
+
+```pipenv run python src/main.py```
+
+### Test cases run
+
+The test doesnt need any explicit inputs, running following pipenv command run the pytest cases. The project have few test cases.
+
+```pipenv run python -m pytest```
+
+
+## Functions
+
+### main
+    - Description: Orchestrates the execution of the program by loading the data, splitting it into training and validation sets, training the model, validating it, and generating predictions for the test dataset.
+    - Flow:
+    Loads the unredactor.tsv data.
+    Splits data into training and validation sets.
+    Trains the model using the training data.
+    Validates the model on the validation data.
+    Tests the model on the test.tsv file and generates the submission.tsv output.
+
+### load_data(file_path)
+    - Description: Reads a TSV file containing the training, validation, and test data. Skips malformed lines and ensures the data is loaded correctly.
+    - Parameters:
+    file_path: Path to the TSV file to load.
+    - Returns: A Pandas DataFrame with the loaded data.
+
+### split_data(data)
+    - Description: Splits the loaded data into training and validation datasets.
+    - Parameters:
+    data: DataFrame containing the entire dataset.
+    - Returns: Two DataFrames – one for training and one for validation.
+
+### extract_features(context, name=None)
+    - Description: Extracts features from the context text, such as the total word count, redaction length, part-of-speech tags, and the ratio of redaction length to context length.
+    - Parameters:
+    context: The text containing the redacted information.
+    name: (Optional) The actual name corresponding to the redaction for training purposes.
+    - Returns: A dictionary containing the extracted features.
+
+### process_data(data)
+    - Description: Applies the feature extraction function to all rows in the dataset.
+    - Parameters:
+    data: DataFrame containing the dataset.
+    - Returns: A new DataFrame with extracted features.
+
+### train_model(training_data)
+    - Description: Trains a Random Forest Classifier on the training dataset using TF-IDF features for the context text.
+    - Parameters:
+    training_data: DataFrame containing the training data.
+    - Returns:
+    model: The trained Random Forest Classifier.
+    vectorizer: The fitted TF-IDF vectorizer used for text transformation.
+
+### validate_model(model, vectorizer, validation_data)
+    - Description: Validates the trained model on the validation dataset and calculates classification metrics (precision, recall, and F1-score).
+    - Parameters:
+    model: Trained Random Forest model.
+    vectorizer: Fitted TF-IDF vectorizer.
+    validation_data: DataFrame containing the validation data.
+    - Returns: A classification report displaying validation metrics.
+
+### predict_name(context, model, vectorizer, redaction_length=None)
+    - Description: Predicts the unredacted name for a given context, prioritizing predictions that match the redaction length if specified.
+    - Parameters:
+    context: The text containing the redacted information.
+    model: Trained Random Forest model.
+    vectorizer: Fitted TF-IDF vectorizer.
+    redaction_length: (Optional) Length of the redacted name to prioritize predictions.
+    - Returns: The predicted name.
+
+### test_model(test_file, model, vectorizer, output_file="submission.tsv")
+    - Description: Tests the model on a given test dataset and produces predictions in the required format.
+Parameters:
+    - test_file: Path to the TSV file containing the test data.
+model: Trained Random Forest model.
+vectorizer: Fitted TF-IDF vectorizer.
+output_file: Path to save the generated predictions (default is submission.tsv).
+Output: Writes predictions to the specified output_file and prints warnings if any mismatches occur.
+### Bugs and Assumptions
+
+- Name-Length Mismatches: Predicted names may not always match the exact length of the redacted text, even with length-based filtering.
+- Ambiguous Contexts: Some contexts may be too vague to provide a clear prediction, leading to random or incorrect outputs.
+- Overfitting to Training Data: The model may rely heavily on frequent names or contexts seen in the training data, reducing its performance on unseen examples.
+- Edge Cases in Test Data: If test data contains malformed or incomplete lines, it could result in skipped entries or erroneous predictions.
+- One Name per Context: Assumes there is only one redacted name per context, simplifying the prediction task.
+- Clean Training Data: Assumes the training data is free from significant errors or inconsistencies that could negatively impact model performance.
+- No External Knowledge: Assumes the model does not use external knowledge graphs or databases for name prediction.
+
