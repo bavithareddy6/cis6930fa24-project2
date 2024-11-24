@@ -14,7 +14,7 @@ The submission.tsv file is a tab-separated values (TSV) file with the following 
 id: A unique identifier for each test entry, corresponding to the ID from the test dataset.
 name: The predicted name for the redacted portion in the given context.
 
-### Project Implementation Steps
+# Project Implementation Steps
 
 #### Data Preprocessing:
    The raw data from unredactor.tsv is loaded and split into training and validation sets. During this step, malformed lines are handled to ensure the integrity of the dataset. Key attributes like context and name are extracted, and any inconsistencies or missing values are flagged. The dataset is structured into a tab-separated format to maintain uniformity and compatibility with processing scripts. The files are loaded into the program for processing.
