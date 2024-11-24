@@ -40,7 +40,7 @@ For the test data, the model generates predictions by processing the context in 
 
 
 
-### Environment setup
+# Environment setup
 Run the follwing pipenv command to create the required environment
 
 ```pipenv install```
@@ -53,11 +53,6 @@ Run the follwing pipenv commands to execute the program
 
 ```pipenv run python src/main.py```
 
-### Test cases run
-
-The test doesnt need any explicit inputs, running following pipenv command run the pytest cases. The project have few test cases.
-
-```pipenv run python -m pytest```
 
 
 ## Functions
