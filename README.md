@@ -115,12 +115,13 @@ The test doesnt need any explicit inputs, running following pipenv command run t
 
 ### test_model(test_file, model, vectorizer, output_file="submission.tsv")
     - Description: Tests the model on a given test dataset and produces predictions in the required format.
-Parameters:
+    Parameters:
     - test_file: Path to the TSV file containing the test data.
-model: Trained Random Forest model.
-vectorizer: Fitted TF-IDF vectorizer.
-output_file: Path to save the generated predictions (default is submission.tsv).
-Output: Writes predictions to the specified output_file and prints warnings if any mismatches occur.
+    model: Trained Random Forest model.
+    vectorizer: Fitted TF-IDF vectorizer.
+    output_file: Path to save the generated predictions (default is submission.tsv).
+    Output: Writes predictions to the specified output_file and prints warnings if any mismatches occur.
+    
 ### Bugs and Assumptions
 
 - Name-Length Mismatches: Predicted names may not always match the exact length of the redacted text, even with length-based filtering.
